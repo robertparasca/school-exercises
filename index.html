@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Snowman Math Game</title>
+    <style>
+      .game-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        max-width: 800px;
+        margin: 20px auto;
+      }
+      .snowman {
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        transition: transform 0.2s;
+      }
+      .snowman:hover {
+        transform: scale(1.1);
+      }
+      .snowman img {
+        width: 100%;
+        height: auto;
+      }
+      .operation {
+        position: absolute;
+        left: 50%;
+        bottom: 20%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: #1a1a1a;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      .answer {
+        position: absolute;
+        left: 50%;
+        top: 25%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        font-weight: bold;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+      }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        min-width: 300px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal.correct .modal-content {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .modal.incorrect .modal-content {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .modal-text {
+        font-size: 32px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        animation: bounceIn 0.5s ease-in-out;
+      }
+
+      .close-modal {
+        font-size: 18px;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 25px;
+        background-color: white;
+        color: #333;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .close-modal:hover {
+        transform: scale(1.05);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Snowman Math Game</h1>
+    <div class="game-container" id="gameContainer"></div>
+
+    <!-- Modal -->
+    <div id="feedbackModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-text" id="modalText"></div>
+        <button class="close-modal" onclick="closeModal()">Continue</button>
+      </div>
+    </div>
+
+    <script>
+      const problems = [
+        { operation: "8÷2", answer: 4, isCorrect: true },
+        { operation: "6÷2", answer: 4, isCorrect: false },
+        { operation: "12÷3", answer: 4, isCorrect: true },
+        { operation: "5-1", answer: 4, isCorrect: true },
+        { operation: "2×3", answer: 4, isCorrect: false },
+        { operation: "9-5", answer: 4, isCorrect: true },
+        { operation: "7-4", answer: 4, isCorrect: false },
+        { operation: "16÷4", answer: 4, isCorrect: true },
+      ];
+
+      function createSnowmen() {
+        const container = document.getElementById("gameContainer");
+        problems.forEach((problem, index) => {
+          const snowman = document.createElement("div");
+          snowman.className = "snowman";
+          snowman.innerHTML = `
+            <img src="./snowman copy.jpg" alt="Snowman ${index + 1}">
+            <div class="operation">${problem.operation}</div>
+            <div class="answer">${problem.answer}</div>
+          `;
+
+          snowman.addEventListener("click", () =>
+            checkAnswer(problem.isCorrect, problem.operation)
+          );
+          container.appendChild(snowman);
+        });
+      }
+
+      function checkAnswer(isCorrect, operation) {
+        const modal = document.getElementById("feedbackModal");
+        const modalText = document.getElementById("modalText");
+
+        modal.className = "modal " + (isCorrect ? "correct" : "incorrect");
+        modalText.textContent = isCorrect
+          ? "🎉 Fantastic! That's Correct! 🎉"
+          : "❄️ Oops! That's not right. Try again! ❄️";
+
+        modal.style.display = "block";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("feedbackModal");
+        modal.style.display = "none";
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("feedbackModal");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Initialize the game
+      createSnowmen();
+    </script>
+  </body>
+</html>
