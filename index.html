@@ -152,14 +152,14 @@
 
     <script>
       const problems = [
-        { operation: "8÷2", answer: 4, isCorrect: true },
-        { operation: "6÷2", answer: 4, isCorrect: false },
-        { operation: "12÷3", answer: 4, isCorrect: true },
-        { operation: "5-1", answer: 4, isCorrect: true },
-        { operation: "2×3", answer: 4, isCorrect: false },
-        { operation: "9-5", answer: 4, isCorrect: true },
-        { operation: "7-4", answer: 4, isCorrect: false },
-        { operation: "16÷4", answer: 4, isCorrect: true },
+        { operation: "9:9", answer: 0, isCorrect: false },
+        { operation: "56÷8", answer: 6, isCorrect: false },
+        { operation: "54÷9", answer: 8, isCorrect: false },
+        { operation: "27:9", answer: 3, isCorrect: true },
+        { operation: "40:8", answer: 5, isCorrect: true },
+        { operation: "32:8", answer: 6, isCorrect: false },
+        { operation: "63:9", answer: 7, isCorrect: true },
+        { operation: "72:8", answer: 9, isCorrect: true },
       ];
 
       function createSnowmen() {
@@ -186,8 +186,8 @@
 
         modal.className = "modal " + (isCorrect ? "correct" : "incorrect");
         modalText.textContent = isCorrect
-          ? "🎉 Fantastic! That's Correct! 🎉"
-          : "❄️ Oops! That's not right. Try again! ❄️";
+          ? "🎉 Felicitări! Este corect! 🎉"
+          : "❄️ Oops! Mai încearcă! ❄️";
 
         modal.style.display = "block";
       }
